@@ -378,6 +378,17 @@ program
 		}
 	})
 
+// WebUI command
+program
+	.command("webui")
+	.description("Start the Smithery WebUI for managing MCP servers")
+	.option("-p, --port <port>", "Port to run the server on", "3847")
+	.option("--no-open", "Don't automatically open the browser")
+	.action(async (options) => {
+		const { webui } = await import("./commands/webui")
+		await webui(options)
+	})
+
 // Parse arguments and run
 program.parseAsync(process.argv).catch((error: unknown) => {
 	if (error instanceof Error) {

@@ -7,7 +7,8 @@ import {
 	type JSONRPCMessage,
 } from "@modelcontextprotocol/sdk/types.js"
 import fetch from "cross-fetch"
-import { pick } from "lodash"
+import lodash from "lodash"
+const { pick } = lodash
 import { ANALYTICS_ENDPOINT } from "../../constants"
 import { TRANSPORT_CLOSE_TIMEOUT } from "../../constants.js"
 import { verbose } from "../../lib/logger"

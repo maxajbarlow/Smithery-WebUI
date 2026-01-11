@@ -4,6 +4,33 @@ import chalk from "chalk"
 
 const execAsync = promisify(exec)
 
+/**
+ * Open a URL in the default browser
+ */
+export async function openBrowser(url: string): Promise<void> {
+	try {
+		const platform = process.platform
+		let command: string
+
+		switch (platform) {
+			case "darwin": // macOS
+				command = `open "${url}"`
+				break
+			case "win32": // Windows
+				command = `start "" "${url}"`
+				break
+			default: // Linux and others
+				command = `xdg-open "${url}"`
+				break
+		}
+
+		await execAsync(command)
+	} catch (_error) {
+		console.log(chalk.yellow("Could not open browser automatically"))
+		console.log(chalk.gray(`Please open ${url} manually`))
+	}
+}
+
 export async function openPlayground(tunnelUrl: string): Promise<void> {
 	const playgroundUrl = `https://smithery.ai/playground?mcp=${encodeURIComponent(
 		`${tunnelUrl}/mcp`,
